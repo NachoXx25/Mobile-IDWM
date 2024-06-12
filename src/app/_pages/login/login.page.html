@@ -1,0 +1,34 @@
+<div class="h-screen w-screen absolute inset-0 flex items-center justify-center" style="background: url('https://img.freepik.com/free-photo/hex-background-networking_52683-137877.jpg?t=st=1718070602~exp=1718074202~hmac=eaf03fbc5545764f23273b0cb7608a962427046e82e5ee086ea99d1cc0bf1e87&w=360') no-repeat center center / cover;">
+  <ion-card class="relative flex flex-col items-center justify-center content-center p-10">
+    <ion-card-header class="relative flex flex-col items-center justify-center content-center">
+      <ion-card-title class="text-2xl">¡Bienvenid&#64; de nuevo!</ion-card-title>
+      <ion-card-subtitle class="text-lg">Inicia sesión</ion-card-subtitle>
+    </ion-card-header>
+    <form [formGroup]="loginForm" (submit)="loginForm.valid && login()" class="relative flex flex-col items-center justify-center content-center" >
+      <div class="p-4">
+        <ion-input style="width: 200px;" formControlName="email" type="email" label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo Electrónico"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="loginForm.controls['email'].touched && loginForm.controls['email']?.errors?.['required']">
+          El correo es requerido.
+        </div>
+        <div style="width: 200px;"  class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="loginForm.controls['email']?.errors?.['email']">
+          Ingresa un formato de correo válido.
+        </div>
+      </div>
+      <div class="">
+        <ion-input style="width: 200px;" formControlName="password" type="password" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Contraseña"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password']?.errors?.['required']">
+         La contraseña es requerida.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="loginForm.controls['password']?.errors?.['minlength']">
+          La contraseña debe tener al menos 8 caracteres.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="loginForm.controls['password']?.errors?.['maxlength']">
+          La contraseña no puede tener más de 20 caracteres.
+        </div>
+      </div>
+      <div class="p-4">
+        <ion-button type="submit" shape="round">¡Iniciar sesión!</ion-button>
+      </div>
+    </form>
+  </ion-card>
+</div>
