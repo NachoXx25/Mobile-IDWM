@@ -1,6 +1,6 @@
 import { AuthService } from './../../_services/auth.service';
-import { Component, Input, OnInit, Self, input } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -39,9 +39,12 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/']);
       },
       error: (result) => {
-        console.log(result);
-        this.errorMessage = result.error.message;
-      }
+        if (typeof result.error === 'string') {
+          this.errorMessage = result.error;
+        } else {
+          this.errorMessage = 'Intente nuevamente';
+        }
+      },
     });
   }
   }

@@ -27,8 +27,15 @@
         </div>
       </div>
       <div class="p-4">
-        <ion-button type="submit" shape="round">¡Iniciar sesión!</ion-button>
+        <ion-button [disabled]="!loginForm.valid" type="submit" shape="round"color="tertiary">¡Iniciar sesión!</ion-button>
       </div>
+      <div
+      *ngIf="errorMessage"
+      class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </div>
     </form>
   </ion-card>
 </div>

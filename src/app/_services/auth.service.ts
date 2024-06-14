@@ -20,7 +20,17 @@ export class AuthService {
         }
       })
     )
-    }
+  }
+
+  register(model:any){
+    return this.http.post<Auth>(this.baseUrl + '/auth/register', model).pipe(
+      map((auth: Auth) => {
+        if(auth){
+          localStorage.setItem('user', JSON.stringify(auth.token));
+        }
+      })
+    )
+  }
 }
 
 

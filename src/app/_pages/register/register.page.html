@@ -1,12 +1,95 @@
-<div class="h-screen w-screen absolute inset-0 flex items-center justify-center" style="background: url('https://img.freepik.com/free-photo/hex-background-networking_52683-137877.jpg?t=st=1718070602~exp=1718074202~hmac=eaf03fbc5545764f23273b0cb7608a962427046e82e5ee086ea99d1cc0bf1e87&w=360') no-repeat center center / cover;">
-  <ion-card class="relative">
-    <ion-card-header>
-      <ion-card-title>Card Title</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+<div class="h-screen w-screen absolute inset-0 flex items-center justify-center overflow-scroll" style="background: url('https://st2.depositphotos.com/1175677/12327/v/450/depositphotos_123277816-stock-illustration-black-wood-background-wallpaper-backdrop.jpg') no-repeat center center / cover;">
+  <ion-card class="relative flex flex-col items-center justify-center content-center p-10">
+    <ion-card-header class="relative flex flex-col items-center justify-center content-center">
+      <ion-card-title class="text-2xl">¡Bienvenid&#64; de nuevo!</ion-card-title>
+      <ion-card-subtitle class="text-lg">Regístrate</ion-card-subtitle>
     </ion-card-header>
+    <form [formGroup]="registerForm" (submit)="registerForm.valid && register()" style="max-height: 90vh; overflow-y: auto;" class="relative flex flex-col items-center justify-center content-center" >
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="rut" type="text" label="Rut" label-placement="floating" fill="outline" placeholder="Formato 12.345.678-9"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['rut'].touched && registerForm.controls['rut']?.errors?.['required']">
+          El Rut es requerido.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['rut']?.errors?.['invalidRut']">
+          Formato de Rut no válido.
+         </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="fullName" type="text" label="Nombre Completo" label-placement="floating" fill="outline" placeholder="Ingrese su nombre completo" formControlName="name"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name'].touched && registerForm.controls['name']?.errors?.['required']">
+          El Nombre es requerido.
+         </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name']?.errors?.['minlength']">
+          El nombre debe tener al menos 8 caracteres.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name']?.errors?.['maxlength']">
+          El nombre no puede tener más de 255 caracteres.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="birthDate" type="text" label="Fecha de Nacimiento" label-placement="floating" fill="outline" placeholder="Formato dd/mm/yyyy" formControlName="birthday"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday'].touched && registerForm.controls['birthday']?.errors?.['required']">
+          La Fecha de Nacimiento es requerida.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday']?.errors?.['invalidDateFormat']">
+          El formato de fecha no válido.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday']?.errors?.['futureDate']">
+          La fecha debe ser menor a la actual.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-select label="Seleccione su género" label-placement="floating" fill="outline" style="width: 200px;" formControlName="genderId">
+          <ion-select-option value="1">{{firstItemSelect}}</ion-select-option>
+          <ion-select-option value="2">{{secondItemSelect}}</ion-select-option>
+          <ion-select-option value="3">{{tirthItemSelect}}</ion-select-option>
+          <ion-select-option value="4">{{fourthItemSelect}}</ion-select-option>
+        </ion-select>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['genderId'].touched && registerForm.controls['genderId']?.errors?.['required']">
+          El Género es requerido.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="email" type="email" label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo Electrónico"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['email'].touched && registerForm.controls['email']?.errors?.['required']">
+          El Email es requerido.
+         </div>
+         <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['email']?.errors?.['email']">
+          El Email es inválido
+         </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="password" type="password" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Contraseña"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password']?.errors?.['required']">
+          La contraseña es requerida.
+         </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password']?.errors?.['minlength']">
+          La contraseña debe tener al menos 8 caracteres.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password']?.errors?.['maxlength']">
+          La contraseña no puede tener más de 20 caracteres.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="confirmPassword" type="password" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Contraseña"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.controls['confirmPassword']?.errors?.['required']">
+          La confirmación es requerida.
+         </div>
+         <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['confirmPassword']?.errors?.['noMatching']">
+          La contraseña y la confirmación deben ser iguales.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-button [disabled]="!registerForm.valid"  type="submit" shape="round" color="tertiary">¡Todo listo!</ion-button>
+      </div>
+      <div
+      *ngIf="errorMessage"
+      class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </div>
+    </form>
 
-    <ion-card-content>
-      Here's a small text description for the card content. Nothing more, nothing less.
-    </ion-card-content>
   </ion-card>
 </div>
