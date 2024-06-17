@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     this.AuthService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('Logged in successfully');
-        this.router.navigate(['/']);
+        this.router.navigate(['/purchases']);
       },
       error: (result) => {
         if (typeof result.error === 'string') {
