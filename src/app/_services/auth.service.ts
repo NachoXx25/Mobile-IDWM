@@ -4,8 +4,6 @@ import { environment } from 'src/environments/environment';
 import { Auth } from '../_interfaces/auth';
 import { map } from 'rxjs';
 
-import { UserLog } from '../_interfaces/UserLog';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,18 +13,24 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getToken(): string | null {
-    return localStorage.getItem('user');
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+      const authObj: Auth = JSON.parse(auth);
+      return authObj.token;
+    }
+    return null;
   }
 
-  login(model:any){
+  login(model: any) {
     return this.http.post<Auth>(this.baseUrl + '/auth/login', model).pipe(
       map((auth: Auth) => {
-        if(auth){
-          const user = new UserLog(auth.user, auth.token);
-          localStorage.setItem('user', JSON.stringify(user));
+        console.log('Respuesta del login:', auth); // Aquí se imprime la respuesta del login
+        if (auth) {
+          localStorage.setItem('auth', JSON.stringify(auth));
         }
+        return auth; // Devuelve la respuesta del login
       })
-    )
+    );
   }
 
   register(model:any){
