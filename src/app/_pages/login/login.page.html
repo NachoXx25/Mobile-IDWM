@@ -1,5 +1,11 @@
-<div class="h-screen w-screen absolute inset-0 flex items-center justify-center" style="background: url('https://img.freepik.com/free-photo/hex-background-networking_52683-137877.jpg?t=st=1718070602~exp=1718074202~hmac=eaf03fbc5545764f23273b0cb7608a962427046e82e5ee086ea99d1cc0bf1e87&w=360') no-repeat center center / cover;">
-  <ion-card class="relative flex flex-col items-center justify-center content-center p-10">
+<div class="h-screen w-screen absolute inset-0 flex items-center justify-center" style="background: url('../../../assets/images/Sin\ título-4_Mesa\ de\ trabajo\ 1.png') no-repeat center center / cover;">
+  <ion-card class="relative p-10">
+    <div class="fixed top-0 left-0 flex">
+      <ion-text class="text-sm flex">
+        <img src="../../../assets/images/boton-de-flecha-izquierda-del-teclado.png" style="width: 14px; height: 14px;">
+        <a href="/" class="hover:underline pb-10">Volver</a>
+      </ion-text>
+    </div>
     <ion-card-header class="relative flex flex-col items-center justify-center content-center">
       <ion-card-title class="text-2xl">¡Bienvenid&#64; de nuevo!</ion-card-title>
       <ion-card-subtitle class="text-lg">Inicia sesión</ion-card-subtitle>
@@ -27,8 +33,20 @@
         </div>
       </div>
       <div class="p-4">
-        <ion-button [disabled]="!loginForm.valid" type="submit" shape="round"color="tertiary">¡Iniciar sesión!</ion-button>
+        <ion-button [disabled]="!loginForm.valid" type="submit" color="tertiary">¡Iniciar sesión!</ion-button>
       </div>
+      <div class="p-4">
+          <ion-text class="text-sm">¿No tienes una cuenta?
+            <a href="/register" class="hover:underline">Regístrate</a>
+          </ion-text>
+      </div>
+      <div
+      *ngIf="isAdministrator"
+      class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"
+      role="alert"
+    >
+      Usuario no autorizado para ingresar.
+    </div>
       <div
       *ngIf="errorMessage"
       class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"

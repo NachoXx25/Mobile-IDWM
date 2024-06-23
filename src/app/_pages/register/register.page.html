@@ -1,7 +1,14 @@
-<div class="h-screen w-screen absolute inset-0 flex items-center justify-center overflow-scroll" style="background: url('https://st2.depositphotos.com/1175677/12327/v/450/depositphotos_123277816-stock-illustration-black-wood-background-wallpaper-backdrop.jpg') no-repeat center center / cover;">
-  <ion-card class="relative flex flex-col items-center justify-center content-center p-10">
+<div class="h-screen w-screen absolute inset-0 flex items-center justify-center overflow-scroll" style="background: url('../../../assets/images/Sin\ título-4_Mesa\ de\ trabajo\ 1.png') no-repeat center center / cover;">
+  <ion-card class="relative p-10">
+    <div class="fixed top-0 left-0 flex">
+      <ion-text class="text-sm flex">
+        <img src="../../../assets/images/boton-de-flecha-izquierda-del-teclado.png" style="width: 14px; height: 14px;">
+        <a href="/" class="hover:underline pb-10">Volver</a>
+      </ion-text>
+    </div>
     <ion-card-header class="relative flex flex-col items-center justify-center content-center">
-      <ion-card-title class="text-2xl">¡Bienvenid&#64; de nuevo!</ion-card-title>
+      <img src="" alt="">
+      <ion-card-title class="text-2xl">¡Bienvenid&#64;!</ion-card-title>
       <ion-card-subtitle class="text-lg">Regístrate</ion-card-subtitle>
     </ion-card-header>
     <form [formGroup]="registerForm" (submit)="registerForm.valid && register()" style="max-height: 90vh; overflow-y: auto;" class="relative flex flex-col items-center justify-center content-center" >
@@ -80,8 +87,13 @@
         </div>
       </div>
       <div class="p-1">
-        <ion-button [disabled]="!registerForm.valid"  type="submit" shape="round" color="tertiary">¡Todo listo!</ion-button>
+        <ion-button [disabled]="!registerForm.valid"  type="submit" color="tertiary">¡Todo listo!</ion-button>
       </div>
+      <div class="p-4">
+        <ion-text class="text-sm">¿Ya tienes una cuenta?
+          <a href="/login" class="hover:underline">Inicia Sesión</a>
+        </ion-text>
+    </div>
       <div
       *ngIf="errorMessage"
       class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"

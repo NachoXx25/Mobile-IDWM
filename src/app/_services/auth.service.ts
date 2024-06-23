@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Auth } from '../_interfaces/auth';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   baseUrl = environment.baseUrl;
-
+  private currentAuthSource = new BehaviorSubject<Auth | null>(null);
+  currentAuth$ = this.currentAuthSource.asObservable();
   constructor(private http: HttpClient) { }
 
   getToken(): string | null {
@@ -24,9 +25,12 @@ export class AuthService {
   login(model: any) {
     return this.http.post<Auth>(this.baseUrl + '/auth/login', model).pipe(
       map((auth: Auth) => {
-        console.log('Respuesta del login:', auth); // Aquí se imprime la respuesta del login
-        if (auth) {
-          localStorage.setItem('auth', JSON.stringify(auth));
+        if(auth){
+          this.setCurrentAuth(auth);
+          if (this.getRole() == 'Admin'){
+            this.logout();
+            console.log('Usuario no autorizado');
+          }
         }
         return auth; // Devuelve la respuesta del login
       })
@@ -37,10 +41,48 @@ export class AuthService {
     return this.http.post<Auth>(this.baseUrl + '/auth/register', model).pipe(
       map((auth: Auth) => {
         if(auth){
-          localStorage.setItem('user', JSON.stringify(auth.token));
+          this.setCurrentAuth(auth);
         }
       })
     )
+  }
+
+  getCurrentAuth(): Auth | null {
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+      return JSON.parse(auth);
+    }
+    return null;
+  }
+  setCurrentAuth(auth: Auth) {
+    localStorage.setItem('auth', JSON.stringify(auth));
+    this.currentAuthSource.next(auth);
+  }
+
+  logout() {
+    localStorage.removeItem('auth');
+    this.currentAuthSource.next(null);
+  }
+
+  getClaimsOfToken(): any {
+    const auth = this.getCurrentAuth();
+    if (auth) {
+      const token = auth.token;
+      const payload = token.split('.')[1];
+      const decodedPayload = atob(payload);
+      const claims = JSON.parse(decodedPayload);
+      return claims;
+    }
+    return null;
+  }
+
+  getRole(): string {
+    const claims = this.getClaimsOfToken();
+    if (claims) {
+      const roleKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+      return claims[roleKey] || '';
+    }
+    return '';
   }
 }
 
