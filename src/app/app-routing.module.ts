@@ -15,6 +15,7 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./_pages/register/register.module').then( m => m.RegisterPageModule)
   },
+  { path: '**', redirectTo: '' }
 
 ];
 
