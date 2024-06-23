@@ -13,7 +13,16 @@ export class AuthService {
   currentAuth$ = this.currentAuthSource.asObservable();
   constructor(private http: HttpClient) { }
 
-  login(model:any){
+  getToken(): string | null {
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+      const authObj: Auth = JSON.parse(auth);
+      return authObj.token;
+    }
+    return null;
+  }
+
+  login(model: any) {
     return this.http.post<Auth>(this.baseUrl + '/auth/login', model).pipe(
       map((auth: Auth) => {
         if(auth){
@@ -23,8 +32,9 @@ export class AuthService {
             console.log('Usuario no autorizado');
           }
         }
+        return auth; // Devuelve la respuesta del login
       })
-    )
+    );
   }
 
   register(model:any){
