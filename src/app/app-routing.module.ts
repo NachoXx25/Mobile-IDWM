@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
+  {
+    path: 'purchases',
+    loadChildren: () => import('./_pages/purchase/purchase.module').then(m => m.PurchasePageModule),
+    canActivate : [AuthGuard]
+  },
   {
     path: '',
     redirectTo: 'home',
@@ -20,10 +26,7 @@ const routes: Routes = [
     loadChildren: () => import('./_pages/register/register.module').then(m => m.RegisterPageModule)
   },
   { path: '**', redirectTo: '' },
-  {
-    path: 'purchases',
-    loadChildren: () => import('./_pages/purchase/purchase.module').then(m => m.PurchasePageModule)
-  },
+
 ];
 
 @NgModule({

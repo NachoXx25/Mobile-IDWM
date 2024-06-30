@@ -33,7 +33,7 @@ export class PurchaseListComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('user'); // Eliminar el usuario del localStorage
+    localStorage.removeItem('auth'); // Eliminar el usuario del localStorage
     this.router.navigate(['/login']); // Redirigir al formulario de inicio de sesión
   }
 }

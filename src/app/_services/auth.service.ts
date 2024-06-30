@@ -8,10 +8,10 @@ import { BehaviorSubject, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = environment.baseUrl;
-  private currentAuthSource = new BehaviorSubject<Auth | null>(null);
-  currentAuth$ = this.currentAuthSource.asObservable();
-  constructor(private http: HttpClient) { }
+  baseUrl = environment.baseUrl; // URL base de la API
+  private currentAuthSource = new BehaviorSubject<Auth | null>(null); // Fuente de datos para la autenticación actual
+  currentAuth$ = this.currentAuthSource.asObservable(); // Observable para la autenticación actual
+  constructor(private http: HttpClient) { } // Inyecta el servicio de HttpClient
 
   getToken(): string | null {
     const auth = localStorage.getItem('auth');
@@ -21,22 +21,26 @@ export class AuthService {
     }
     return null;
   }
-
+  /**
+   *  Login de usuario
+   * @param model  Datos del usuario
+   * @returns  Respuesta del login
+   */
   login(model: any) {
     return this.http.post<Auth>(this.baseUrl + '/auth/login', model).pipe(
       map((auth: Auth) => {
         if(auth){
           this.setCurrentAuth(auth);
-          if (this.getRole() == 'Admin'){
-            this.logout();
-            console.log('Usuario no autorizado');
-          }
         }
         return auth; // Devuelve la respuesta del login
       })
     );
   }
-
+  /**
+   *  Registro de usuario
+   * @param model  Datos del usuario
+   * @returns  Respuesta del registro
+   */
   register(model:any){
     return this.http.post<Auth>(this.baseUrl + '/auth/register', model).pipe(
       map((auth: Auth) => {
@@ -46,7 +50,10 @@ export class AuthService {
       })
     )
   }
-
+  /**
+   *  Obtiene la autenticación actual
+   * @returns Autenticación actual
+   */
   getCurrentAuth(): Auth | null {
     const auth = localStorage.getItem('auth');
     if (auth) {
@@ -54,16 +61,25 @@ export class AuthService {
     }
     return null;
   }
+  /**
+   *  Establece la autenticación actual
+   * @param auth Autenticación actual
+   */
   setCurrentAuth(auth: Auth) {
     localStorage.setItem('auth', JSON.stringify(auth));
     this.currentAuthSource.next(auth);
   }
-
+  /**
+   * Cierra la sesión del usuario
+   */
   logout() {
     localStorage.removeItem('auth');
     this.currentAuthSource.next(null);
   }
-
+  /**
+   *  Obtiene los claims del token
+   * @returns Claims del token
+   */
   getClaimsOfToken(): any {
     const auth = this.getCurrentAuth();
     if (auth) {
@@ -75,14 +91,25 @@ export class AuthService {
     }
     return null;
   }
-
+  /**
+   *  Obtiene el role del usuario
+   * @returns Role del usuario
+   */
   getRole(): string {
     const claims = this.getClaimsOfToken();
     if (claims) {
-      const roleKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+      const roleKey =  'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
       return claims[roleKey] || '';
     }
     return '';
+  }
+  /**
+   *  Verifica si el usuario está autenticado
+   * @returns  Si el usuario está autenticado
+   */
+  isAuthenticated(): boolean {
+    const auth = this.getCurrentAuth();
+    return auth !== null;
   }
 }
 

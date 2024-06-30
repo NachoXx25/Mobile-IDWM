@@ -9,17 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: []
 })
 export class RegisterPage implements OnInit {
-  registerForm: FormGroup = new FormGroup({});
-  firstItemSelect: string = 'Masculino';
-  secondItemSelect: string = 'Femenino';
-  tirthItemSelect: string = 'Prefiero no decir';
-  fourthItemSelect: string = 'Otro';
-  errorMessage: string = '';
+  registerForm: FormGroup = new FormGroup({});  // Variable para guardar el formulario de registro
+  firstItemSelect: string = 'Masculino'; // Variable para guardar el valor seleccionado
+  secondItemSelect: string = 'Femenino'; // Variable para guardar el valor seleccionado
+  tirthItemSelect: string = 'Prefiero no decir'; // Variable para guardar el valor seleccionado
+  fourthItemSelect: string = 'Otro'; // Variable para guardar el valor seleccionado
+  errorMessage: string = ''; // Variable para guardar el mensaje de error
 
-  constructor(private router: Router, private fb: FormBuilder, private AuthService: AuthService) { }
+  constructor(private router: Router, private fb: FormBuilder, private AuthService: AuthService) { } // Inyecta el servicio de autenticación
 
   ngOnInit() {
-    this.initializeForm();
+    this.initializeForm(); // Inicializa el formulario de registro
   }
 
   initializeForm() {
@@ -35,10 +35,12 @@ export class RegisterPage implements OnInit {
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () =>
         this.registerForm.controls['confirmPassword'].updateValueAndValidity(),
-    });
+    }); // Actualiza la validación de la contraseña
 
   }
-
+  /**
+   * Registra un usuario
+   */
   register() {
     this.AuthService.register(this.registerForm.value).subscribe({
       next: () => {
@@ -54,6 +56,10 @@ export class RegisterPage implements OnInit {
       }
     });
   }
+  /**
+   *  Valida el RUT
+   * @returns Rut válido
+   */
   validateRut(): ValidatorFn {
     return (control: AbstractControl) => {
       const rut = control.value;
@@ -95,7 +101,10 @@ export class RegisterPage implements OnInit {
       return null;
     };
   }
-
+  /**
+   *  Valida la fecha
+   * @returns  Fecha válida
+   */
   validateDate(): ValidatorFn {
     return (control: AbstractControl) => {
       const date = control.value;
@@ -123,7 +132,11 @@ export class RegisterPage implements OnInit {
       return null;
     };
   }
-
+  /**
+   *  Compara los valores
+   * @param matchTo  Valor a comparar
+   * @returns  Valores iguales
+   */
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
       return control.value === control.parent?.get(matchTo)?.value
