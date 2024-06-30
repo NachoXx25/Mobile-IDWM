@@ -11,20 +11,21 @@ import { Auth } from 'src/app/_interfaces/auth';
   styleUrls: []
 })
 export class LoginPage implements OnInit {
-  loginForm: FormGroup = new FormGroup({});
-  errorMessage: string = '';
-  auth: Auth | null = null;
-  role: string = '';
-  isAdministrator: boolean = false;
+  loginForm: FormGroup = new FormGroup({}); // Variable para guardar el formulario de login
+  errorMessage: string = ''; // Variable para guardar el mensaje de error
+  auth: Auth | null = null; // Variable para guardar la autenticación del usuario
+  role: string = ''; // Variable para guardar el role del usuario
+  isAdministrator: boolean = false; // Variable para verificar si el usuario es administrador o no
 
-  constructor(private router: Router, private fb: FormBuilder, private AuthService: AuthService) {}
+  constructor(private router: Router, private fb: FormBuilder, private AuthService: AuthService) {} // Inyecta el servicio de autenticación
 
   ngOnInit() {
-    this.initializeForm();
     this.auth = this.AuthService.getCurrentAuth();
-    this.assignRole();
+    this.initializeForm();
   }
-
+  /**
+   * Inicializa el formulario de login
+   */
   initializeForm() {
     this.loginForm = this.fb.group({
       email: ['', [
@@ -38,16 +39,22 @@ export class LoginPage implements OnInit {
       ]]
     });
   }
-  assignRole() {
-    this.role = this.AuthService.getRole();
-  }
+  /**
+   *  Obtiene el role del usuario
+   * @returns Role del usuario
+   */
   getRolee(): string{
     return this.AuthService.getRole();
   }
-
-  login(){
-    this.AuthService.login(this.loginForm.value).subscribe({
+  /**
+   * Login de clientes (denega acceso a administrador)
+   */
+  async login(){
+    this.errorMessage = '';
+    this.isAdministrator = false;
+    await this.AuthService.login(this.loginForm.value).subscribe({
       next: () => {
+        this.role = this.AuthService.getRole();
         if (this.role == 'Admin'){
           this.isAdministrator = true;
           this.AuthService.logout();
@@ -55,7 +62,7 @@ export class LoginPage implements OnInit {
         }
         else if (this.role == 'Usuario'){
           console.log('Logged in successfully');
-          this.router.navigate(['/']);
+          this.router.navigate(['/purchases/']);
         }
         else {
           this.isAdministrator = true;
