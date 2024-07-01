@@ -1,20 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+<div class="h-screen w-screen absolute inset-0 flex flex-col items-center justify-center" style="background: url('../../assets/images/Sin\ título-4-02.png') no-repeat center center / cover;">
+  <h1 class="text-2xl font-sans font-extrabold" style="color: white; font-style: italic; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; margin-bottom: 18px;">¡Bienvenid&#64; a VirtuBazaar!</h1>
+  <h2 style="color: white; text-align: center; margin-bottom: 32px;">
+    Inicia sesión o regístrate para comenzar
+    <br>
+    a disfrutar de la mejor experiencia de
+    <br>
+    compra en línea.
+    <br>
+  </h2>
+  <img src="../../assets/images/seguro.png" style="width: 80px; height: 80px;">
+</div>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="login" routerLink="/login">
+      <ion-icon name="log-in"></ion-icon>
+      Iniciar sesión
+    </ion-tab-button>
+    <ion-tab-button tab="register" routerLink="/register">
+      <ion-icon name="person-add"></ion-icon>
+      Registrarse
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

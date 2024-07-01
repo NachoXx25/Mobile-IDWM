@@ -1,0 +1,107 @@
+<div class="h-screen w-screen absolute inset-0 flex items-center justify-center overflow-scroll" style="background: url('../../../assets/images/Sin\ título-4_Mesa\ de\ trabajo\ 1.png') no-repeat center center / cover;">
+  <ion-card class="relative p-10">
+    <div class="fixed top-0 left-0 flex">
+      <ion-text class="text-sm flex">
+        <img src="../../../assets/images/boton-de-flecha-izquierda-del-teclado.png" style="width: 14px; height: 14px;">
+        <a href="/" class="hover:underline pb-10">Volver</a>
+      </ion-text>
+    </div>
+    <ion-card-header class="relative flex flex-col items-center justify-center content-center">
+      <img src="" alt="">
+      <ion-card-title class="text-2xl">¡Bienvenid&#64;!</ion-card-title>
+      <ion-card-subtitle class="text-lg">Regístrate</ion-card-subtitle>
+    </ion-card-header>
+    <form [formGroup]="registerForm" (submit)="registerForm.valid && register()" style="max-height: 90vh; overflow-y: auto;" class="relative flex flex-col items-center justify-center content-center" >
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="rut" type="text" label="Rut" label-placement="floating" fill="outline" placeholder="Formato 12.345.678-9"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['rut'].touched && registerForm.controls['rut']?.errors?.['required']">
+          El Rut es requerido.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['rut']?.errors?.['invalidRut']">
+          Formato de Rut no válido.
+         </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="fullName" type="text" label="Nombre Completo" label-placement="floating" fill="outline" placeholder="Ingrese su nombre completo" formControlName="name"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name'].touched && registerForm.controls['name']?.errors?.['required']">
+          El Nombre es requerido.
+         </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name']?.errors?.['minlength']">
+          El nombre debe tener al menos 8 caracteres.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['name']?.errors?.['maxlength']">
+          El nombre no puede tener más de 255 caracteres.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="birthDate" type="text" label="Fecha de Nacimiento" label-placement="floating" fill="outline" placeholder="Formato dd/mm/yyyy" formControlName="birthday"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday'].touched && registerForm.controls['birthday']?.errors?.['required']">
+          La Fecha de Nacimiento es requerida.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday']?.errors?.['invalidDateFormat']">
+          El formato de fecha no válido.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['birthday']?.errors?.['futureDate']">
+          La fecha debe ser menor a la actual.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-select label="Seleccione su género" label-placement="floating" fill="outline" style="width: 200px;" formControlName="genderId">
+          <ion-select-option value="1">{{firstItemSelect}}</ion-select-option>
+          <ion-select-option value="2">{{secondItemSelect}}</ion-select-option>
+          <ion-select-option value="3">{{tirthItemSelect}}</ion-select-option>
+          <ion-select-option value="4">{{fourthItemSelect}}</ion-select-option>
+        </ion-select>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['genderId'].touched && registerForm.controls['genderId']?.errors?.['required']">
+          El Género es requerido.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="email" type="email" label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo Electrónico"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['email'].touched && registerForm.controls['email']?.errors?.['required']">
+          El Email es requerido.
+         </div>
+         <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['email']?.errors?.['email']">
+          El Email es inválido
+         </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="password" type="password" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Contraseña"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password']?.errors?.['required']">
+          La contraseña es requerida.
+         </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password']?.errors?.['minlength']">
+          La contraseña debe tener al menos 8 caracteres.
+        </div>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['password']?.errors?.['maxlength']">
+          La contraseña no puede tener más de 20 caracteres.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-input style="width: 200px;" formControlName="confirmPassword" type="password" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Contraseña"></ion-input>
+        <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.controls['confirmPassword']?.errors?.['required']">
+          La confirmación es requerida.
+         </div>
+         <div style="width: 200px;" class="bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500" *ngIf="registerForm.controls['confirmPassword']?.errors?.['noMatching']">
+          La contraseña y la confirmación deben ser iguales.
+        </div>
+      </div>
+      <div class="p-1">
+        <ion-button [disabled]="!registerForm.valid"  type="submit" color="tertiary">¡Todo listo!</ion-button>
+      </div>
+      <div class="p-4">
+        <ion-text class="text-sm">¿Ya tienes una cuenta?
+          <a href="/login" class="hover:underline">Inicia Sesión</a>
+        </ion-text>
+    </div>
+    <div
+    *ngIf="errorMessage"
+    class="p-4 relative left-5 text-sm text-red-800 rounded-lg bg-red-50"
+    role="alert"
+  >
+    <span class="font-medium">Error!</span> {{ errorMessage }}
+  </div>
+    </form>
+
+  </ion-card>
+</div>

@@ -1,0 +1,29 @@
+<ion-content>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Mis Compras</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Salir
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list *ngIf="purchases$ | async as purchases">
+    <ion-card *ngFor="let purchase of purchases" class="bg-gray-800 text-white">
+      <ion-card-header>
+        <ion-card-title>{{ purchase?.productName }}</ion-card-title>
+        <ion-card-subtitle>{{ purchase?.productType }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="text-white">Fecha Compra: {{ purchase?.purchase_Date | date }}</p>
+        <p class="text-white">Precio: ${{ purchase?.productPrice }}</p>
+        <p class="text-white">Cantidad: {{ purchase?.quantity }}</p>
+        <p class="text-white">Precio total: ${{ purchase?.totalPrice }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
