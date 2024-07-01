@@ -42,7 +42,7 @@ export class AuthService {
    * @returns  Respuesta del registro
    */
   register(model:any){
-    return this.http.post<Auth>(this.baseUrl + '/auth/register', model).pipe(
+    return this.http.post<Auth>(this.baseUrl + '/auth/register', model, { responseType: 'text' as 'json'}).pipe(
       map((auth: Auth) => {
         if(auth){
           this.setCurrentAuth(auth);

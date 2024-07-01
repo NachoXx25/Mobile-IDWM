@@ -94,12 +94,11 @@
           <a href="/login" class="hover:underline">Inicia Sesión</a>
         </ion-text>
     </div>
-      <div
-      *ngIf="errorMessage"
-      class="p-4 text-sm text-red-800 rounded-lg bg-red-50" style="width: 200px;"
-      role="alert"
-    >
-      {{ errorMessage }}
+    <div *ngIf="errors.length > 0" class="p-4 relative left-5 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+      <span class="font-medium">Errores:</span>
+      <ul class="mt-2">
+        <li *ngFor="let error of errors">{{ error }}</li>
+      </ul>
     </div>
     </form>
 
